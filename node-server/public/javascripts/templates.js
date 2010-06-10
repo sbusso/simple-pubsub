@@ -1,0 +1,3 @@
+var _chat = {template: "<li>{{text}}</li>", action: "append"};
+var _cote = {template: "{{cote}}", action: "html", callback: "parent().effect('highlight', {}, 3000)"};
+var _game = {template: "<td class='rc'><a href='/courses/{{race_id}}'>{{rc}}</a></td><td class='heure centered'>{{heure}}</td>{{#runners}}<td class='prono centered'><span>{{number}}</span><small id='cote_{{partant_id}}' class='cote'>{{cote}}</small></td>{{/runners}}", action: "html", callback: "effect('highlight', {}, 3000)"}

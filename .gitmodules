@@ -1,0 +1,6 @@
+[submodule "socket-io-server"]
+        path = node-server/lib/socket-io
+        url = git://github.com/LearnBoost/Socket.IO-node.git
+[submodule "socket-io"]
+        path = node-server/public/javascripts/socket-io
+        url = git://github.com/LearnBoost/Socket.IO.git
