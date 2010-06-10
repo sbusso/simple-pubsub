@@ -26,7 +26,7 @@ The node server is based on [socket.io](http://github.com/LearnBoost/Socket.IO-n
 This is the master piece of the mechanism. Manages websocket clients and also subscription. Listening to the publisher, it will dispatch the messages to subscribers.
 
 Subscriber engine (browser client)
-===========================
+==================================
 
 The client part uses [socket.io](http://github.com/LearnBoost/Socket.IO) for data transport and then send data to a small engine. A very simple engine, mapping subscribed channel with a [mustache-js](http://github.com/janl/mustache.js/) template, and providing javascript objects.
 

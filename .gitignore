@@ -1,3 +1,4 @@
 faye.js
 fanout.js
 .DS_Store
+.gitignore
