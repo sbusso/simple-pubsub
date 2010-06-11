@@ -1,18 +1,18 @@
 Simple PubSub
 =============
 
-The aim of this framework is to provide a very simple pubsub system (thinking of Bayeux) for real time web updates (push):
+The aim of this framework is to provide a very simple pubsub system for real time web updates (push):
 
-- a ruby publisher (other can be developed)
-- a node hub receiving updates (no store)
-- a client receiving update it subscribed to
-- web part live update, automatically mapped from the channel and with embedded micro templates.
+- a ruby publisher sending objects to a channel
+- a node hub receiving updates (no storage) and dispatching data
+- a client receiving subscribed updates
+- web part update, automatically mapped from the channel and using embedded micro templates.
  
  
 Publisher: publisher.rb
 =========
 
-The publisher is very simple, sending information with json. Only one publisher can publish on any channel. In the original project, there is only one publisher providing any channel. 
+The publisher is very simple, sending information with json. One publisher can publish on any channel. In the original attempt, there is only one publisher, the main app. 
 
 <pre><code>require 'lib/publisher'
 pub =  Publisher.new('localhost')
@@ -21,9 +21,9 @@ pub.publish("/path/to/channel", {:text => "hello world"})</code></pre>
 Hub: server.js
 ====
  
-The node server is based on [socket.io](http://github.com/LearnBoost/Socket.IO-node) module. Managing subscription and broadcasting. Also has a keepalive hack to maintain websocket. Currently uses port 8080 for websocket, waiting for http proxy to fully support websocket (nginx) 
+This is the master piece of the mechanism. The node server is based on [socket.io](http://github.com/LearnBoost/Socket.IO-node) module. Manages websocket clients and also subscription. Listening to the publisher, it will dispatch the messages to subscribers. Also has a keepalive hack to maintain websocket. Currently uses port 8080, waiting for http proxy to fully support websocket (nginx) 
 
-This is the master piece of the mechanism. Manages websocket clients and also subscription. Listening to the publisher, it will dispatch the messages to subscribers.
+ 
 
 Subscriber engine (browser client)
 ==================================
@@ -32,11 +32,11 @@ The client part uses [socket.io](http://github.com/LearnBoost/Socket.IO) for dat
 
 Auto subscription:
 
-Each element of your webpage with _subscriber_ css class will be subscribed to the channel corresponding to its _id_ minus the integer if you need to identify this element with an integer. The subscribed channel will be mapped from the _id_:
+Each element of your webpage with _subscriber_ css class will subscribe to the channel corresponding to its _id_ (minus the integer if you need to identify this element with an integer): _main_name_1234_ will subscribe to the _/main/name_ channel.
 
-<pre> main_name_1234 => /main/name </pre>
+Template: 
 
-template: for each event type (root of channel) you have to write a javascript object with the attribute template (mustache.js) and optionnally the html method and a callback.
+For each event type (root of channel) you have to write a javascript object with the attribute template (mustache.js) and optionnally the html method and a callback.
 
 Nested channel (TODO)
 ==============
