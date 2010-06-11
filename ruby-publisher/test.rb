@@ -2,7 +2,8 @@ require "lib/publisher"
 
 pub =  Publisher.new('turf-live')
 pub.publish("/chat/salon", {:text => "hello world"}) #, :id => 'salon', :event_type => 'chat'})
-# pub.publish("/chat/paddocks", {:text => "salut les paddocks"}) #, :id => 'paddocks', :event_type => 'chat'})
+pub.publish("/chat", {:text => "all chat"})
+ pub.publish("/chat/paddocks", {:text => "salut les paddocks"}) #, :id => 'paddocks', :event_type => 'chat'})
 # pub.publish("/chat/paddocks", {:text => "salut les potaux"}) #, :id => 'paddocks', :event_type => 'chat'})
 # (1..100).each do |i|
 #   pub.publish("/chat/paddocks", {:text => "yo yo yo #{Time.now}"}) #, :id => 'paddocks', :event_type => 'chat'})

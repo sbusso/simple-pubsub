@@ -47,7 +47,5 @@ TODO
 ====
 
 - client keepalive / reconnect
-- don't duplicate subscriptions
 - use authentication on some channels
-- nested channels (server)
 
