@@ -1,3 +1,8 @@
+// Event engine
+// - transform the data in object
+// - get the template corresponding to the channel
+// - render the update html
+// - update DOM subscribers
 function handle_event(data){
   var obj = JSON.parse(data);
   var channel = obj.channel.split("/"),
@@ -12,6 +17,8 @@ function handle_event(data){
     eval(chain);
 };
 
+// Extract channel from path
+// - if path include integer ID then remove it
 function extract_channel(ident){
 	var parts = ident.split('_');
 	if( isNaN( parseInt(parts[parts.length-1]) ) ) {
@@ -21,6 +28,7 @@ function extract_channel(ident){
 	}
 }
 
+// initialize the socket and subscribe to channels
 function subscribers(){
 	var socket = new io.Socket('turf-live', {port: 8080});
 	socket.connect();
@@ -43,6 +51,7 @@ function subscribers(){
 	});
 }
 
+// initialize
 $(function() {
 	io.setPath('/javascripts/socket.io/');
   subscribers();

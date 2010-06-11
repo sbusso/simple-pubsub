@@ -8,23 +8,30 @@ var sys = require("sys"),
 var clients = [];
 var channels = new Array;
 
+// hub server
+// ==========
+// first create an http listener on port 8080
 var http = require('http')
 server = http.createServer(function(req, res){});
 server.listen(8080);
+// plug socket io
 io_server = io.listen(server, {
 	onClientConnect: function(client){
 		sys.debug("client connected on socket.io");
 	},
+	// Receive a message = subscription
 	onClientMessage: function(data, client){
 		path = data['subscribe'];
 		if (!(channels.hasKey(path))){
 			channels[path] = [];
 		}
 		channels[path].push(client);
-		sys.debug("client "+client.sessionId+" subscribe to "+path);		
+		sys.debug("client "+client.sessionId+" subscribe to "+path);
 	},	
+	// Client disconnected: remove from the list
 	onClientDisconnect: function(client){
 		sys.debug("client disconnected");
+		// TODO: remove client from channels
 	 	io_server.clients.remove(client.i);
 	}
 });
@@ -45,4 +52,5 @@ function keepAlive(){
 keepAlive();
 
 // publisher server
+// ================
 publisher.createServer(channels).listen(8081);

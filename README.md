@@ -1,7 +1,7 @@
 Simple PubSub
-===========
+=============
 
-The aim of this framework is to provide a very simple pubsub system (thinking of Bayeux) for real time web updates:
+The aim of this framework is to provide a very simple pubsub system (thinking of Bayeux) for real time web updates (push):
 
 - a ruby publisher (other can be developed)
 - a node hub receiving updates (no store)
@@ -32,11 +32,13 @@ The client part uses [socket.io](http://github.com/LearnBoost/Socket.IO) for dat
 
 Auto subscription:
 
-Each element with _subscriber_ class will be subscribed to the channel corresponding to its _id_ minus the integer if you need to identify this element with an integer. The subscribed channel will be mapped from the _id_:
+Each element of your webpage with _subscriber_ css class will be subscribed to the channel corresponding to its _id_ minus the integer if you need to identify this element with an integer. The subscribed channel will be mapped from the _id_:
 
 <pre> main_name_1234 => /main/name </pre>
 
-Nested channel
+template: for each event type (root of channel) you have to write a javascript object with the attribute template (mustache.js) and optionnally the html method and a callback.
+
+Nested channel (TODO)
 ==============
 
 /event/sub_event*/id
@@ -46,19 +48,6 @@ TODO
 
 - client keepalive / reconnect
 - don't duplicate subscriptions
-
-HOW TO
-======
-
-The files you need to manage:
-
-- html: include js and define your elements to update with the class live and the id channel_path[_1234]
-- template: for each event type (root of channel) you have to write a javascript object with the attribute template (mustache.js) and optionnally the html method and a callback.
-- publisher: this is the server side publisher. In ruby you only need to create a new publisher and publish the information:
-<pre><code>publisher.publish('/channel/path', message(Hash) ) 
-  
-the hash attributes will be automatically mapped to the template variables.
-
-
-
+- use authentication on some channels
+- nested channels (server)
 
