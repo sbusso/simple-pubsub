@@ -9,7 +9,7 @@ class Publisher
   attr :state
   
   def logger
-    @logger ||= defined? Rails ? Rails.logger : Logger.new(STDOUT)
+    @logger ||= defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
   end
   
   def initialize(addr = '127.0.0.1', port = 8081)
@@ -25,7 +25,11 @@ class Publisher
   def publish(channel, opts)
     if connected?
       request = {:channel => channel}.merge(opts).to_json+ '\ufffd'
-      @socket.print request
+      begin
+        @socket.print request
+      rescue
+        logger.debug "An error occured during publication"
+      end
     else
       logger.debug "The publisher is not connected"
     end

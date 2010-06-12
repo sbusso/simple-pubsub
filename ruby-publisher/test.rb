@@ -5,21 +5,22 @@ pub.publish("/chat/salon", {:text => "hello world"}) #, :id => 'salon', :event_t
 pub.publish("/chat", {:text => "all chat"})
  pub.publish("/chat/paddocks", {:text => "salut les paddocks"}) #, :id => 'paddocks', :event_type => 'chat'})
 # pub.publish("/chat/paddocks", {:text => "salut les potaux"}) #, :id => 'paddocks', :event_type => 'chat'})
-# (1..100).each do |i|
+#(1..100).each do |i|
 #   pub.publish("/chat/paddocks", {:text => "yo yo yo #{Time.now}"}) #, :id => 'paddocks', :event_type => 'chat'})
 #   sleep(60)
 # end
 cotes = [6.0, 27.0, 32.0, 4.4]
-# (1..100).each do 
-#   cote = rand(4)
-#   variation = (rand(40).to_f - 20.0)/10.0
-#   p variation
-#   if cotes[cote] + variation > 1.9
-#     cotes[cote] += variation 
-#   end
-#   pub.publish("/cote/#{cote+5}", {:cote => cotes[cote]})
-#   sleep(2)
-# end
+(1..100).each do |t|
+  cote = rand(4)
+  variation = (rand(40).to_f - 20.0)/10.0
+  p variation
+  if cotes[cote] + variation > 1.9
+    cotes[cote] += variation 
+  end
+  pub.publish("/cote/#{cote+5}", {:cote => cotes[cote]})
+  pub.publish("/chat/paddocks", {:text => "yo yo yo #{Time.now}"}) if (t % 10) == 0
+  sleep(2)
+end
 
 pub.publish("/game/41590", { :race_id => 41590,
                             :rc => 'R2C6',
